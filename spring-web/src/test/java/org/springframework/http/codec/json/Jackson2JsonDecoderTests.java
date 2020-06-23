@@ -89,6 +89,11 @@ public class Jackson2JsonDecoderTests extends AbstractDecoderTestCase<Jackson2Js
 
 		assertFalse(decoder.canDecode(forClass(String.class), null));
 		assertFalse(decoder.canDecode(forClass(Pojo.class), APPLICATION_XML));
+		assertTrue(this.decoder.canDecode(forClass(Pojo.class),
+				new MediaType("application", "json", StandardCharsets.UTF_8)));
+		assertTrue(this.decoder.canDecode(forClass(Pojo.class),
+				new MediaType("application", "json", StandardCharsets.ISO_8859_1)));
+
 	}
 
 	@Test  // SPR-15866
@@ -231,6 +236,26 @@ public class Jackson2JsonDecoderTests extends AbstractDecoderTestCase<Jackson2Js
 				})
 				.verifyComplete(),
 				MediaType.parseMediaType("application/json; charset=utf-16"),
+				null);
+	}
+
+	@Test
+	@SuppressWarnings("unchecked")
+	public void decodeNonUnicode() {
+		Flux<DataBuffer> input = Flux.concat(
+				stringBuffer("{\"føø\":\"bår\"}", StandardCharsets.ISO_8859_1)
+		);
+
+		testDecode(input, ResolvableType.forType(new ParameterizedTypeReference<Map<String, String>>() {
+				}),
+				step -> step.assertNext(o -> {
+					assertTrue(o instanceof Map);
+					Map<String, String> map = (Map<String, String>) o;
+					assertEquals(1, map.size());
+					assertEquals("bår", map.get("føø"));
+				})
+						.verifyComplete(),
+				MediaType.parseMediaType("application/json; charset=iso-8859-1"),
 				null);
 	}
 
