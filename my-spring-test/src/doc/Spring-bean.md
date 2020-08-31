@@ -16,4 +16,6 @@ ResourcePatternResolver 为 PathMatchingResourcePatternResolver(支持 Ant 风�
 3. 调用 AbstractApplicationContext 的 refresh 方法，进行刷新
 
 ```java
+
+
 ```
