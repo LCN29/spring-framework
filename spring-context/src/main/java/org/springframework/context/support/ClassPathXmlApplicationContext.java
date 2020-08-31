@@ -134,19 +134,20 @@ public class ClassPathXmlApplicationContext extends AbstractXmlApplicationContex
 	 * @throws BeansException if context creation failed
 	 * @see #refresh()
 	 */
-	public ClassPathXmlApplicationContext(
-			String[] configLocations, boolean refresh, @Nullable ApplicationContext parent)
-			throws BeansException {
+	public ClassPathXmlApplicationContext(String[] configLocations, boolean refresh, @Nullable ApplicationContext parent) throws BeansException {
 
-		// 这里一直调用到 AbstractApplicationContext
+		// 这里一直调用到 AbstractApplicationContext 的构造函数
 		// 在 AbstractApplicationContext 内设置了 资源模式解析器(ResourcePatternResolver) 为 PathMatchingResourcePatternResolver
-		// 作用：有了这个就帮助我们解析指定路径内的 xml 文件
+		// 作用：有了这个就帮助我们解析指定路径内的 xml 文件, 默认为 PathMatchingResourcePatternResolver 这个解析器, 支持 Ant 风格
 		super(parent);
+
+		// 这里会调用到 AbstractRefreshableConfigApplicationContext 的 setConfigLocations 方法
 		// 将传进来的配置路径(configLocations)做一下转换，并保存在 configLocations
 		setConfigLocations(configLocations);
 		if (refresh) {
 			refresh();
 		}
+
 	}
 
 

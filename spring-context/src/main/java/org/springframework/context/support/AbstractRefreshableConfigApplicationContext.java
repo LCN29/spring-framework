@@ -74,10 +74,16 @@ public abstract class AbstractRefreshableConfigApplicationContext extends Abstra
 	 * <p>If not set, the implementation may use a default as appropriate.
 	 */
 	public void setConfigLocations(@Nullable String... locations) {
+
 		if (locations != null) {
+			// 数组中存在为 null 的对象就抛出异常
 			Assert.noNullElements(locations, "Config locations must not be null");
+
 			this.configLocations = new String[locations.length];
+
 			for (int i = 0; i < locations.length; i++) {
+
+				//地址解析, 比如将输入的 "classpath:test.xml" 解析成真正的地址
 				this.configLocations[i] = resolvePath(locations[i]).trim();
 			}
 		}
@@ -122,6 +128,7 @@ public abstract class AbstractRefreshableConfigApplicationContext extends Abstra
 	 * @see org.springframework.core.env.Environment#resolveRequiredPlaceholders(String)
 	 */
 	protected String resolvePath(String path) {
+		// 调用到 AbstractApplicationContext 的 getEnvironment() 方法
 		return getEnvironment().resolveRequiredPlaceholders(path);
 	}
 
