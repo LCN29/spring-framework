@@ -15,7 +15,9 @@ public class ApplicationContext {
 
 	public static void main(String[] args) {
 
-		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring-bean.xml");
+		String xmlPath = "classpath:${user.name}/spring-bean.xml";
+
+		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(xmlPath);
 
 		Person person = (Person)context.getBean("personBean");
 
