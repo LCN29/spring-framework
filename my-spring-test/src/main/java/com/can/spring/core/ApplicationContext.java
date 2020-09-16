@@ -19,9 +19,14 @@ public class ApplicationContext {
 
 		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(xmlPath);
 
+		context.getEnvironment().setActiveProfiles("development");
+		context.refresh();
+
 		Person person = (Person)context.getBean("personBean");
+		Person person1 = (Person) context.getBean("personBean2");
 
 		person.selfIntroduction();
+		person1.selfIntroduction();
 
 	}
 }
