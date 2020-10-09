@@ -1,0 +1,21 @@
+@startuml
+
+class DefaultListableBeanFactory {
+}
+
+abstract class AbstractAutowireCapableBeanFactory {
+}
+
+abstract class AbstractBeanFactory {
+}
+
+interface ConfigurableListableBeanFactory {
+}
+
+interface AutowireCapableBeanFactory{
+}
+
+interface ConfigurableBeanFactory {
+}
+
+@enduml

@@ -18,14 +18,13 @@ public class ApplicationContext {
 		String xmlPath = "classpath:${user.name}/spring-bean.xml";
 
 		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(xmlPath);
+		Person person = (Person)context.getBean("personBean");
+		person.selfIntroduction();
 
+		// spring profile 的 作用
 		context.getEnvironment().setActiveProfiles("development");
 		context.refresh();
-
-		Person person = (Person)context.getBean("personBean");
 		Person person1 = (Person) context.getBean("personBean2");
-
-		person.selfIntroduction();
 		person1.selfIntroduction();
 
 	}
