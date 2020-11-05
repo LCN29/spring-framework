@@ -10,32 +10,32 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
-
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
 
 /**
  * <pre>
- *
+ * Spring 内部对 SAX 解析的
  * </pre>
  *
  * @author canxin.li
- * @date 2020-11-03 16:10
+ * @date 2020-11-04 14:59
  */
-public class XmlReader {
+public class SpringXmlReader {
 
 	public static void main(String[] args) throws Exception {
 
-		// 设置资源
-		EncodedResource encodedResource = new EncodedResource(new ClassPathResource("spring-bean.xml"));
-		// 加载解析
+		// 资源路径
+		// 1. ClassPathResource 支持 classpath: 等配置
+		// 2. EncodedResource 对我们的资源进行一层包装, 支持指定编码方式和字符集
+		EncodedResource encodedResource = new EncodedResource(new ClassPathResource("classpath:spring-bean.xml"));
+
+		// 获取需要解析的文件的 SAXParser 需要的 InputSource 对象
 		InputSource inputSource = new InputSource(encodedResource.getResource().getInputStream());
 
 		DocumentLoader documentLoader = new DefaultDocumentLoader();
+
+
 		// DefaultHandler 回调函数, ResourceEntityResolver 解析
 		Document doc = documentLoader.loadDocument(inputSource, new ResourceEntityResolver(new PathMatchingResourcePatternResolver()), new DefaultHandler(), 3, false);
 
@@ -50,30 +50,7 @@ public class XmlReader {
 			String id = ele.getAttribute("id");
 			String clazz = ele.getAttribute("class");
 			String scope = ele.getAttribute("scope");
-			//System.out.println("测试结果 beanName:" + id + " beanClass："+ clazz +" scope：" + scope);
-		}
-
-		defaultFn();
-	}
-
-
-	public static void defaultFn() throws Exception {
-		SAXParserFactory sf = SAXParserFactory.newInstance();
-		SAXParser sp = sf.newSAXParser();
-
-		sp.parse(new InputSource("C:\\Users\\Administrator\\Desktop\\spring-bean.xml"), new MyHandler());
-	}
-
-	public static class MyHandler extends DefaultHandler {
-
-		public void characters(char ch[], int start, int length) throws SAXException {
-			String s = new String(ch, start, length);
-			System.out.println(s);
-		}
-
-		public void startElement(String uri, String localName, String qName, Attributes attrs) {
-			System.out.println(localName + "///" + qName + "///" + uri + "////" + attrs.getValue("id"));
+			System.out.println("测试结果 beanName:" + id + " beanClass："+ clazz +" scope：" + scope);
 		}
 	}
-
 }
