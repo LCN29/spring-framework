@@ -35,7 +35,6 @@ public class SpringXmlReader {
 
 		DocumentLoader documentLoader = new DefaultDocumentLoader();
 
-
 		// DefaultHandler 回调函数, ResourceEntityResolver 解析
 		Document doc = documentLoader.loadDocument(inputSource, new ResourceEntityResolver(new PathMatchingResourcePatternResolver()), new DefaultHandler(), 3, false);
 

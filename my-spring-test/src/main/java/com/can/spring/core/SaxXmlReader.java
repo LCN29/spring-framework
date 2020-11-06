@@ -81,7 +81,6 @@ public class SaxXmlReader {
 		public void startElement(String uri, String localName, String qName, Attributes attrs) {
 			System.out.println(localName + "///" + qName + "///" + uri + "////" + attrs.getValue("id"));
 		}
-
 	}
 
 }
