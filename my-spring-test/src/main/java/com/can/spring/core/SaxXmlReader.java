@@ -73,11 +73,13 @@ public class SaxXmlReader {
 	 */
 	public static class MyHandler extends DefaultHandler {
 
+		@Override
 		public void characters(char ch[], int start, int length) throws SAXException {
 			String s = new String(ch, start, length);
 			System.out.println(s);
 		}
 
+		@Override
 		public void startElement(String uri, String localName, String qName, Attributes attrs) {
 			System.out.println(localName + "///" + qName + "///" + uri + "////" + attrs.getValue("id"));
 		}
