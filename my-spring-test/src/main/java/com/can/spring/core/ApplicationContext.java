@@ -15,17 +15,17 @@ public class ApplicationContext {
 
 	public static void main(String[] args) {
 
-		String xmlPath = "classpath:${user.name}/spring-bean.xml";
+		String xmlPath = "classpath*:${user.name}/spring-bean.xml";
 
 		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(xmlPath);
 		Person person = (Person)context.getBean("personBean");
 		person.selfIntroduction();
 
 		// spring profile 的 作用
-		context.getEnvironment().setActiveProfiles("development");
-		context.refresh();
-		Person person1 = (Person) context.getBean("personBean2");
-		person1.selfIntroduction();
+		//context.getEnvironment().setActiveProfiles("development");
+		//context.refresh();
+		//Person person1 = (Person) context.getBean("personBean2");
+		//person1.selfIntroduction();
 
 	}
 }
